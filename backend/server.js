@@ -3,7 +3,7 @@ import express from 'express';
 import endpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import profileRoutes from './routes/profileRoutes.js'
+import profileRoutes from './routes/profileRoutes.js';
 import cors from 'cors';
 import {
   badRequestHandler,
