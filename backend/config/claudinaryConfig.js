@@ -17,7 +17,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-    folder: "Last_Build_week5",
+    folder: "Last_Build_week22.07.2024",
     allowedFormats: ["jpg", "png", "jpeg", "gif"],
 }
 });
