@@ -1,6 +1,33 @@
 import { Schema, model} from 'mongoose';
 import bcrypt from 'bcrypt';
 
+const experianceSchema  = new Schema(
+    {
+        role: {
+            type: String,
+            required: true
+        },
+        company: {
+            type: String,
+        },
+        startDate: {
+            type: Date,
+        },
+        endDate: {
+            type: Date,
+        },
+        description: {
+            type: String,
+        },
+        area: {
+            type: String,
+        },
+    },
+    {
+        timestamps: true,
+        _id: true
+    }
+)
 const profileSchema = new Schema(
     {
         name: {
@@ -37,13 +64,18 @@ const profileSchema = new Schema(
         },
         googleId: {
             type: String
-        }
+        },
+        experiences: [experianceSchema],
+
     },
     {
         timestamps: true,
         collection: 'profiles'
     }
 )
+
+
+
 
 // Metodo per confrontare le password
 profileSchema.methods.comparePassword =  function (candidatePassword) {
