@@ -73,9 +73,17 @@ router.post("/", cloudinaryUploader.single("image"), async (req, res) => {
 // Rotta per aggiornare un il profilo
 router.patch("/:id", cloudinaryUploader.single("image"), async (req, res) => {
   try {
-    const upgradeProfile = await Profile.findByIdAndUpdate(req.params.id, req.body, {
+    const updateData = {...req.body};
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+
+    const upgradeProfile = await Profile.findByIdAndUpdate(
+      req.params.id, 
+      updateData, 
+       {
       new: true, // Restituisce il documento aggiornato anziché quello vecchio
-    });
+      });
     if (!upgradeProfile) {
       // Se il blog post non viene trovato, invia una risposta 404
       return res.status(404).json({ message: "Profilo non trovato" });
