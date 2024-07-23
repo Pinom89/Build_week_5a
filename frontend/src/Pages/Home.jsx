@@ -23,7 +23,6 @@ export default function Home() {
                     <Col md={8}>
                         <Profile />
                     </Col>
-                    
                     {/* Componente Colonna, 4 su 12 colonne per il componente AsideDx */}
                     <Col md={4}>
                         <AsideDx />

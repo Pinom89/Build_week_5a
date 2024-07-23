@@ -14,6 +14,7 @@ import Skills from './infoProfile/Skills';
 
 // Importa il componente UpdateProfile
 import UpdateProfile from './UpdateProfile';
+import fetchWithAuth from '../services/fetchWithAuth';
 
 
 function Profile() {
@@ -21,10 +22,10 @@ function Profile() {
   const login = 'me';
 
   // URL dell'API per la lettura dei profili
-  const url = 'https://striveschool-api.herokuapp.com/api/profile/';
+  const url = 'http://localhost:5000/profile/';
 
   // Recupero il token di autorizzazione
-  const Token = process.env.TOKEN;
+  //const Token = process.env.TOKEN;
   
   // Definizione degli stati locali
   const [profile, setProfile] = useState([]);
@@ -34,11 +35,7 @@ function Profile() {
   // Funzione per recuperare il profilo
   const fetchProfile = () => {
     setIsEnableSpinner(true);
-    fetch(url + login, {
-      headers: {
-        Authorization: 'Bearer ' + Token,
-      },
-    })
+   fetchWithAuth(`${url}${login}`)
     .then((response) => response.json())
     .then((data) => {
       setProfile(data);

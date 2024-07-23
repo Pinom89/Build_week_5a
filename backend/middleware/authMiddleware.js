@@ -1,5 +1,5 @@
 import {verifJWT}  from "../utils/jwt.js";
-import User from "../models/User.js";
+import Profile from "../models/profile.js";
 
 // Middeleware per controllare l'autenticazione di un utente
 
@@ -21,15 +21,15 @@ export const authMiddleware = async (req, res, next) => {
 
         // Usa l'ID dell'autore dal token per trovare l'autore nel database
     // .select('-password') esclude il campo password dai dati restituiti
-    const user = await User.findById(decoded.id).select("-password");
+    const profile = await Profile.findById(decoded.id).select("-password");
 
     // Se l'autore non viene trovato nel database, restituisci un errore 401
-    if (!user) {
+    if (!profile) {
         return res.status(401).send("Utente non trovato");
 }
        // Aggiungi l'oggetto author alla richiesta
     // Questo rende i dati dell'autore disponibili per le route successive
-    req.user = user;
+    req.profile = profile;
      // Passa al prossimo middleware o alla route handler
     next();
 

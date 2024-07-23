@@ -1,10 +1,11 @@
 import express from 'express';
 import Profile from '../models/profile.js';
 import { generateJWT } from '../utils/jwt.js';
-import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { authMiddleware } from '../middleware/authMiddleware.js';
 //import passport from '../config/passportConfig.js';
 
 
+const router = express.Router();
 // POST /login => restituisce token di accesso
 router.post('/login', async (req, res) => {
   try {
@@ -40,3 +41,6 @@ router.get('/me', authMiddleware, (req, res) => {
     res.status(500).json({ message: 'Errore nel server' });
   }
 });
+
+
+export default router;

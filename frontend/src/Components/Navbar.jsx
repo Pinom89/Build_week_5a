@@ -3,6 +3,7 @@ import React from 'react';
 import { Navbar, Container, Nav, FormControl, InputGroup, NavDropdown } from 'react-bootstrap';
 // Importa il componente NavLink da react-router-dom
 import { NavLink } from 'react-router-dom';
+import Logged from './Logged';
 
 // Definisce il componente LinkedInNavbar
 export default function LinkedInNavbar() {
@@ -62,7 +63,8 @@ export default function LinkedInNavbar() {
               <NavDropdown.Item href="#logout">Logout</NavDropdown.Item>
             </NavDropdown>
             <div className='divider ms-5'></div>
-          </Nav>      
+            <Logged /> {/* Componente Logged */}       
+             </Nav>      
 
           <Nav>
             {/* Dropdown per le aziende */}

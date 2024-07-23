@@ -14,7 +14,7 @@ import {
 } from './middleware/errorHandlers.js';
 import path from 'path'; // UPLOAD: Modulo per gestire i percorsi dei file
 import { fileURLToPath } from 'url'; // UPLOAD Per convertire URL in percorsi di file
-// import authRoutes from './routes/authRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 // import session  from 'express-session';
 // import passport from "./config/passportConfig.js";
 
@@ -68,7 +68,7 @@ const PORT = process.env.PORT || 5000;
 
 
 // Usa le rotte per gli utenti
-// app.use('/auth', authRoutes);
+app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 app.use('/profile', experiencesRoutes);
 app.use(badRequestHandler);

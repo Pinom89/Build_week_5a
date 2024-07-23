@@ -2,6 +2,7 @@
 import { Form, Modal } from "react-bootstrap";
 // Importa le funzioni useState e useEffect da React
 import { useState, useEffect } from 'react';
+import fetchWithAuth from "../services/fetchWithAuth.js"
 
 function UpdateProfile({ profile, fetchProfile }) {
   // Stampa il profilo attuale nella console
@@ -10,7 +11,7 @@ function UpdateProfile({ profile, fetchProfile }) {
   // Recupera il token di autorizzazione dalle variabili d'ambiente
   const Token = process.env.TOKEN;
   // URL dell'API per aggiornare il profilo
-  const url = 'https://striveschool-api.herokuapp.com/api/profile/';
+  const url = `http://localhost:5000/profile/${profile._id}`;
 
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
@@ -56,22 +57,28 @@ function UpdateProfile({ profile, fetchProfile }) {
   };
 
   // Gestisce l'aggiornamento del profilo inviando i dati al server
-  const handleUpdateProfile = () => {
-    fetch(url, {
-      method: 'PUT',
-      headers: {
-        Authorization: 'Bearer ' + Token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formDataProfile),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        handleClose(); // Chiude il modal
-        fetchProfile(); // Ricarica il profilo
-      })
-      .catch((error) => console.error(error));
+  const handleUpdateProfile = async () => {
+    try {
+      const response = await fetchWithAuth(url, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      
+      // console.log(data);
+      handleClose(); // Chiude il modal
+      fetchProfile(); // Ricarica il profilo
+    } catch (error) {
+      console.error("Errore durante l'aggiornamento del profilo:", error);
+      // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
+    }
   };
 
   return (

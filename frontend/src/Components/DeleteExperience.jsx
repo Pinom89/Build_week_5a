@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 // Componente per eliminare un'esperienza lavorativa
 function DeleteExperience({ id, idExp, fetchExperiences }) {
   // URL per l'API di eliminazione dell'esperienza
-  const url = `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences/${idExp}`;
+  const url = `http://localhost:5000/profile/${id}/experiences/${idExp}`;
 
   // Stato per controllare la visibilità del modal
   const [show, setShow] = useState(false);
@@ -14,31 +14,21 @@ function DeleteExperience({ id, idExp, fetchExperiences }) {
   const handleShow = () => setShow(true);
 
   // Token di autenticazione per l'API
-  const Token = process.env.TOKEN;
+ //  const Token = process.env.TOKEN;
 
   // Funzione per gestire l'eliminazione dell'esperienza
-  const handleElimina = () => {
-    fetch(url, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + Token,
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        // Chiude il modal e aggiorna la lista delle esperienze
+  const handleElimina = async () => {
+    try {
+       fetchWithAuth(url, {
+        method: 'DELETE',
+      });
         handleClose();
-        fetchExperiences();
-      } else {
-        // Gestisce eventuali errori
-        return response.json()
-        .then(data => {
-          console.error('Error:', data);
-        });
-      }
-    })
-    .catch(error => console.error(error));
-  }
+        await fetchExperiences();
+    } catch (error) {
+      console.error('Errore durante l\'eliminazione:', error);
+      // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
+    }
+  };
 
   return(
     <>

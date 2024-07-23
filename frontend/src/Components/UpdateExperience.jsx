@@ -7,12 +7,12 @@ import { format } from 'date-fns';
 
 function UpdateExperience({ id, idExp, experience, fetchExperiences }) {
   // Stampa l'esperienza attuale nella console
-  console.log('La mia esperienza: ', experience);
+ // console.log('La mia esperienza: ', experience);
 
   // Recupera il token di autorizzazione dalle variabili d'ambiente
-  const Token = process.env.TOKEN;
+  //const Token = process.env.TOKEN;
   // URL dell'API per aggiornare l'esperienza
-  const url = `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences/${idExp}`;
+  const url = `http://localhost:5000/profile/${id}/experiences/${idExp}`;
 
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
@@ -54,22 +54,22 @@ function UpdateExperience({ id, idExp, experience, fetchExperiences }) {
   };
 
   // Gestisce l'aggiornamento dell'esperienza inviando i dati al server
-  const handleUpdateExperience = () => {
-    fetch(url, {
-      method: 'PUT',
-      headers: {
-        Authorization: 'Bearer ' + Token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formDataExperience),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        handleClose(); // Chiude il modal
-        fetchExperiences(); // Ricarica le esperienze
-      })
-      .catch((error) => console.error(error));
+  const handleUpdateExperience = async () => {
+    try {
+      fetchWithAuth(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataExperience),
+      });
+      
+      handleClose(); // Chiude il modal
+      await fetchExperiences(); // Ricarica le esperienze
+    } catch (error) {
+      console.error('Errore durante l\'aggiornamento dell\'esperienza:', error);
+      // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
+    }
   };
 
   return (

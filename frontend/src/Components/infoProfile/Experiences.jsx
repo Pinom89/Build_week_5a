@@ -9,7 +9,7 @@ import DeleteExperience from '../DeleteExperience';
 
 // Componente per visualizzare le esperienze lavorative dell'utente
 function Experiences({ id, login }) {
-  const Token = process.env.TOKEN;
+ // const Token = process.env.TOKEN;
   
   // Stati per gestire le esperienze, lo spinner e gli errori
   const [Experiences, setExperience] = useState([]);
@@ -20,28 +20,22 @@ function Experiences({ id, login }) {
   // Usa l'ID fornito come prop o dall'URL
   const idToUse = id || params._id;
 
-  const urlExperiences = 'https://striveschool-api.herokuapp.com/api/profile';
+  const urlExperiences = 'http://localhost:5000/profile';
 
   // Funzione per recuperare le esperienze dall'API
-  const fetchExperiences = () => {
+  const fetchExperiences = async () => {
     setIsEnableSpinner(true);
-    fetch(`${urlExperiences}/${idToUse}/experiences`, {
-      headers: {
-        Authorization: 'Bearer ' + Token,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setExperience(data);
-        setIsError(false);
-      })
-      .catch((error) => {
-        console.error('Error loading...', error);
-        setIsError(true);
-      })
-      .finally(() => setIsEnableSpinner(false));
+    try {
+      await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`)
+      setExperience(data);
+      setIsError(false);
+    } catch (error) {
+      console.error('Error loading...', error);
+      setIsError(true);
+    } finally {
+      setIsEnableSpinner(false);
+    }
   };
-
   // Effetto per caricare le esperienze al montaggio del componente o al cambio di ID
   useEffect(() => {
     fetchExperiences();
