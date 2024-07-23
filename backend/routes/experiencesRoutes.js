@@ -116,7 +116,7 @@ router.delete("/:id/experiences/:experienceId", async (req, res) => {
         if (!experience) {
             return res.status(404).json({ message: "Esperienza non trovata" });
         }
-        experience.pull({_id: req.params.experienceId});
+        profile.experiences.pull({_id: req.params.experienceId});
         await profile.save();
         res.json({profile, message: "Esperienza cancellata correttamente"});
     } catch (err) {
