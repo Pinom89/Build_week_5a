@@ -4,6 +4,7 @@ import endpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import profileRoutes from './routes/profileRoutes.js';
+import experiencesRoutes from './routes/experiencesRoutes.js'
 import cors from 'cors';
 import {
   badRequestHandler,
@@ -69,6 +70,7 @@ const PORT = process.env.PORT || 5000;
 // Usa le rotte per gli utenti
 // app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/profile', experiencesRoutes);
 app.use(badRequestHandler);
 app.use(unauthorizedHandler);
 app.use(notFoundHandler);

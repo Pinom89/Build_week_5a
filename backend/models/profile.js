@@ -22,6 +22,9 @@ const experianceSchema  = new Schema(
         area: {
             type: String,
         },
+        image: {
+            type: String,
+        },
     },
     {
         timestamps: true,
