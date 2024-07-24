@@ -48,7 +48,7 @@ export default function Login() {
             window.dispatchEvent(new Event('login'));
             alert('Login effettuato');
             setTimeout(() => {
-                navigate('/'); 
+                navigate('/home'); 
                 console.log('Dati di login inviati:', login);
             }, 1500);
                 

@@ -2,16 +2,16 @@
 import { Form, Modal } from "react-bootstrap";
 // Importa le funzioni useState e useEffect da React
 import { useState, useEffect } from 'react';
-import fetchWithAuth from "../services/fetchWithAuth.js"
+import fetchWithAuth from "../services/fetchWithAuth"
 
-function UpdateProfile({ profile, fetchProfile }) {
+function UpdateProfile({ authorLogin }) {
   // Stampa il profilo attuale nella console
-  console.log('Il mio profilo: ', profile);
+  console.log('Il mio profilo: ', authorLogin);
 
   // Recupera il token di autorizzazione dalle variabili d'ambiente
-  const Token = process.env.TOKEN;
+ // const Token = process.env.TOKEN;
   // URL dell'API per aggiornare il profilo
-  const url = `http://localhost:5000/profile/${profile._id}`;
+  const url = `http://localhost:5000/profile/${authorLogin._id}`;
 
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
@@ -28,19 +28,19 @@ function UpdateProfile({ profile, fetchProfile }) {
 
   // Effettua il popolamento dei dati del modulo quando il profilo cambia
   useEffect(() => {
-    if (profile) {
+    if (authorLogin) {
       setFormDataProfile({
-        name: profile.name,
-        surname: profile.surname,
-        email: profile.email,
-        username: profile.username,
-        area: profile.area,
-        title: profile.title,
-        bio: profile.bio,
-        image: profile.image
+        name: authorLogin.name || "",
+        surname: authorLogin.surname || "",
+        email: authorLogin.email || "",
+        username: authorLogin.username || "",
+        area: authorLogin.area || "",
+        title: authorLogin.title || "",
+        bio: authorLogin.bio || "",
+        image: authorLogin.image || ""
       });
     }
-  }, [profile]);
+  }, [authorLogin]);
 
   // Funzione per chiudere il modal
   const handleClose = () => setShow(false);
@@ -59,22 +59,16 @@ function UpdateProfile({ profile, fetchProfile }) {
   // Gestisce l'aggiornamento del profilo inviando i dati al server
   const handleUpdateProfile = async () => {
     try {
-      const response = await fetchWithAuth(url, {
+      await fetchWithAuth(url, {
         method: 'PATCH',
         headers: {
           "Content-Type": "application/json",
         }
       });
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      
       // console.log(data);
       handleClose(); // Chiude il modal
-      fetchProfile(); // Ricarica il profilo
+      // fetchProfile(); // Ricarica il profilo
     } catch (error) {
       console.error("Errore durante l'aggiornamento del profilo:", error);
       // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
@@ -174,7 +168,7 @@ function UpdateProfile({ profile, fetchProfile }) {
             <Form.Group className='mb-3'>
               <Form.Label>Immagine del profilo</Form.Label>
               <Form.Control
-                type='url'
+                type='string'
                 name='image'
                 value={formDataProfile.image}
                 onChange={handleProfileChange}

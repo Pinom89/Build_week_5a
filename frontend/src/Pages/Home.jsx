@@ -7,10 +7,10 @@ import AsideDx from "../Components/AsideDx"; // Importa il componente AsideDx
 // Definisce il componente Home come esportazione predefinita
 export default function Home() {
     // Ottiene la chiave API dalle variabili d'ambiente
-    const apiKey = process.env.TOKEN
+   // const apiKey = process.env.TOKEN (non serve più - vecchio progetto)
 
     // Stampa la chiave API nella console (utile per il debugging)
-    console.log(apiKey);
+   // console.log(apiKey);(non serve più - vecchio progetto)
     
     return (
         // Frammento React utilizzato per raggruppare gli elementi senza aggiungere nodi extra al DOM

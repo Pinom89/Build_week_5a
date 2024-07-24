@@ -8,7 +8,7 @@ import UpdateExperience from '../UpdateExperience';
 import DeleteExperience from '../DeleteExperience';
 
 // Componente per visualizzare le esperienze lavorative dell'utente
-function Experiences({ id, login }) {
+function Experiences({ id}) {
  // const Token = process.env.TOKEN;
   
   // Stati per gestire le esperienze, lo spinner e gli errori
@@ -26,7 +26,7 @@ function Experiences({ id, login }) {
   const fetchExperiences = async () => {
     setIsEnableSpinner(true);
     try {
-      await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`)
+     const data = await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`)
       setExperience(data);
       setIsError(false);
     } catch (error) {

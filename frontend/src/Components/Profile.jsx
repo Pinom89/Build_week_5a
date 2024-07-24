@@ -1,7 +1,7 @@
 // Importa lo stile CSS personalizzato
 import '../style/Profile.css';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 // Importa i componenti necessari da react-bootstrap
 import { Alert, Col, Container, Row, Spinner, Button, ProgressBar } from 'react-bootstrap';
 // Importa i componenti per le varie sezioni del profilo utente
@@ -14,54 +14,58 @@ import Skills from './infoProfile/Skills';
 
 // Importa il componente UpdateProfile
 import UpdateProfile from './UpdateProfile';
-import fetchWithAuth from '../services/fetchWithAuth';
+// import fetchWithAuth from '../services/fetchWithAuth';
+import {AuthContext} from "../Context/AuthContext"
 
 
 function Profile() {
   // Definisce l'utente come "me" per il proprio profilo
-  const login = 'me';
+  // const login = 'auth/me';
 
   // URL dell'API per la lettura dei profili
-  const url = 'http://localhost:5000/profile/';
+  // const url = 'http://localhost:5000/profile/';
 
   // Recupero il token di autorizzazione
   //const Token = process.env.TOKEN;
   
   // Definizione degli stati locali
-  const [profile, setProfile] = useState([]);
-  const [isEnableSpinner, setIsEnableSpinner] = useState(false);
-  const [isError, setIsError] = useState(false);
+  // const [profile, setProfile] = useState([]);
+  // const [isEnableSpinner, setIsEnableSpinner] = useState(false);
+  // const [isError, setIsError] = useState(false);
 
-  // Funzione per recuperare il profilo
-  const fetchProfile = () => {
-    setIsEnableSpinner(true);
-   fetchWithAuth(`${url}${login}`)
-    .then((response) => response.json())
-    .then((data) => {
-      setProfile(data);
-      setIsError(false);
-    })
-    .catch((error) => {
-      console.error('Error loading...', error);
-      setIsError(true);
-    })
-    .finally(() => setIsEnableSpinner(false)); 
-  }
+//   // Funzione per recuperare il profiloconst 
+//   const fetchProfile = async () => {
+//       setIsEnableSpinner(true);
+//       try {
+//         const response = await fetchWithAuth(`${url}`);
+//         setProfile(response.profiles);
+//         setIsError(false);
+//       } catch (error) {
+//         console.error('Error loading...', error);
+//         setIsError(true);
+//       } finally {
+//         setIsEnableSpinner(false);
+//       }
+//     };
 
-  // Effettua il fetch del profilo quando il componente è montato
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+//     // Effettua il fetch del profilo quando il componente è montato
+//     useEffect(() => {
+//       fetchProfile();
+//  }, []);
 
-  console.log(profile);
+//   console.log(profile);
+
+const { authorLogin, setAuthorLogin } = useContext(AuthContext);
+const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+ console.log(authorLogin);
   
   return ( 
     <>
-      {/* Mostra lo spinner di caricamento se isEnableSpinner è true */}
+      {/* Mostra lo spinner di caricamento se isEnableSpinner è true
       {isEnableSpinner && <div className='text-center mt-5'><Spinner animation='grow' /></div>}
       {/* Mostra un messaggio di errore se isError è true */}
-      {isError && <div className='text-center mt-5'><Alert variant='danger'>Error loading...</Alert></div>}
-     
+      {/* {isError && <div className='text-center mt-5'><Alert variant='danger'>Error loading...</Alert></div>} */}
+      
       <Container className='pb-2 border-0 content__card content__profile'>
         {/* Sezione background del profilo */}
         <Row className='profile__bg'>
@@ -72,20 +76,20 @@ function Profile() {
         </Row>
         {/* Sezione immagine del profilo */}
         <Row className='profile__image'>
-          <img className='image__user' src={profile.image} alt={profile.name} />
+          <img className='image__user' src={authorLogin.image} alt={authorLogin.name} />
         </Row>
         <div className='d-flex justify-content-end '>
           {/* Componente per aggiornare il profilo */}
-          <UpdateProfile profile={profile} fetchProfile={fetchProfile} />
+          <UpdateProfile authorLogin={authorLogin} />
           {/* <button className='upgrade__profile p-0'><i className='fa-solid fa-pen'></i></button> */}
         </div>
         <Row className='user__detail'>
           <Col xs={12} md={8}>
             <h4 className='name mb-0 justify-content-start'>
-              {profile.name} {profile.surname}
+              {authorLogin.name} {authorLogin.surname}
             </h4>
-            <p className='my-0 occupation'>{profile.title}</p>
-            <p className='my-0 location text-muted'>{profile.area} • <span className='connections'>Informazioni di contatto</span></p>
+            <p className='my-0 occupation'>{authorLogin.title}</p>
+            <p className='my-0 location text-muted'>{authorLogin.area} • <span className='connections'>Informazioni di contatto</span></p>
 
             <p className='my-2 connections'>
               5 collegamenti
@@ -160,13 +164,13 @@ function Profile() {
       <Resources />
       
       {/* Sezione "Attività" */}
-      <Activity login={login} />
+      <Activity />
 
       {/* Sezione "Esperienze" */}
-      <Experiences id={profile._id} login={login} />
+      <Experiences id={authorLogin._id}  />
 
       {/* Sezione "Competenze" */}
-      <Skills login={login} />
+      <Skills/>
     </> 
   );
 };

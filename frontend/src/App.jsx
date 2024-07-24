@@ -12,6 +12,7 @@ import MyFooter from './Components/MyFooter';
 import Login from './Pages/Login';
 import {AuthProvider} from './Context/AuthProvider'
 import Register from './Pages/Register';
+import Home from './Pages/Home';
 
 function App() {
   // const token = process.env.TOKEN;
@@ -38,7 +39,10 @@ function App() {
             path="/register"
             element={<Register />}
           />
-        
+          <Route 
+           path="/home" 
+           element={<Home />} 
+          />
           </Routes>
         </Router>
         <MyFooter/>

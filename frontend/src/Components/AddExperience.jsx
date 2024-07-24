@@ -10,10 +10,10 @@ function AddExperience({ id, fetchExperiences }) {
   const handleShow = () => setShow(true);
 
   // Token di autenticazione per l'API
-  const Token = process.env.TOKEN;
+  // const Token = process.env.TOKEN;
 
   // URL per l'API di aggiunta esperienza
-  const url = `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`;
+  const url = `http://localhost:5000/profile/${id}/experiences`;
 
   // Stato per i dati del form dell'esperienza
   const [FormDataExperience, setFormDataExperience] = useState({
@@ -34,33 +34,36 @@ function AddExperience({ id, fetchExperiences }) {
     });
   };
 
-  // Invia i dati dell'esperienza all'API
-  const sendComment = () => {
-    fetch(url, {
+  // Invia i dati dell'esperienza all'APIconst 
+  const sendComment = async () => {
+  try {
+    const response = await fetchWithAuth(url, {
       method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + Token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(FormDataExperience),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      // Resetta il form
-      setFormDataExperience({
-        role: '',
-        company: '',
-        startDate: '',
-        endDate: '',
-        description: '',
-        area: '',
-      });
-      handleClose();
-      fetchExperiences(); // Aggiorna la lista delle esperienze
-    })
-    .catch((error) => console.error(error));
-  };
+    });
+
+    console.log(response);
+  
+    // Resetta il form
+    setFormDataExperience({
+      role: '',
+      company: '',
+      startDate: '',
+      endDate: '',
+      description: '',
+      area: '',
+    });
+
+    handleClose();
+    await fetchExperiences(); // Aggiorna la lista delle esperienze
+  } catch (error) {
+    console.error('Errore durante l\'invio del commento:', error);
+    // Qui puoi aggiungere una gestione dell'errore più specifica, come mostrare un messaggio all'utente
+  }
+};
 
   return (
     <>
