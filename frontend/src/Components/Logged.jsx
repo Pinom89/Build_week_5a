@@ -68,10 +68,11 @@ export default function Logged() {
           }
           }, [isLoggedIn, navigate]);
 
+          console.log(authorLogin);
   return (
     <div className='d-column justify-content-center align-items-center'>
       <h5 style={{color:'white'}}>
-      {isLoggedIn ? `Benvenuto ${authorLogin.nome}` : ''}
+      {isLoggedIn ? `Benvenuto ${authorLogin.name}` : ''}
     
 
      

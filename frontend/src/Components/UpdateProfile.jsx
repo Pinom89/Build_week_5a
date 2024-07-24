@@ -57,23 +57,26 @@ function UpdateProfile({ authorLogin }) {
   };
 
   // Gestisce l'aggiornamento del profilo inviando i dati al server
-  const handleUpdateProfile = async () => {
-    try {
-      await fetchWithAuth(url, {
-        method: 'PATCH',
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
+
+    const handleUpdateProfile = async () => {
+      try {
+        await fetchWithAuth(url, {
+          method: 'PATCH',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataProfile),
+        });
+     
+        // console.log(data);
+        handleClose(); // Chiude il modal
+        // fetchProfile(); // Ricarica il profilo
+      } catch (error) {
+        console.error("Errore durante l'aggiornamento del profilo:", error);
+        // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
+      }
+    };
   
-      // console.log(data);
-      handleClose(); // Chiude il modal
-      // fetchProfile(); // Ricarica il profilo
-    } catch (error) {
-      console.error("Errore durante l'aggiornamento del profilo:", error);
-      // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
-    }
-  };
 
   return (
     <>

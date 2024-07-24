@@ -1,7 +1,7 @@
 // Importa lo stile CSS personalizzato
 import '../style/Profile.css';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 // Importa i componenti necessari da react-bootstrap
 import { Alert, Col, Container, Row, Spinner, Button, ProgressBar } from 'react-bootstrap';
 // Importa i componenti per le varie sezioni del profilo utente
@@ -14,51 +14,59 @@ import Skills from './infoProfile/Skills';
 
 // Importa il componente UpdateProfile
 import UpdateProfile from './UpdateProfile';
-// import fetchWithAuth from '../services/fetchWithAuth';
+import fetchWithAuth from '../services/fetchWithAuth';
 import {AuthContext} from "../Context/AuthContext"
 
 
 function Profile() {
-  // Definisce l'utente come "me" per il proprio profilo
-  // const login = 'auth/me';
 
-  // URL dell'API per la lettura dei profili
-  // const url = 'http://localhost:5000/profile/';
+  const { authorLogin, setAuthorLogin } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  console.log(authorLogin._id);
+  const id = authorLogin._id;
+
+ 
+  // Definisce l'utente come "me" per il proprio profilo
+  //  const login = 'auth/me';
+
+// URL dell'API per la lettura dei profili
+   const url = `http://localhost:5000/profile/${authorLogin._id}`;
 
   // Recupero il token di autorizzazione
   //const Token = process.env.TOKEN;
   
   // Definizione degli stati locali
-  // const [profile, setProfile] = useState([]);
-  // const [isEnableSpinner, setIsEnableSpinner] = useState(false);
-  // const [isError, setIsError] = useState(false);
+ //  const [profile, setProfile] = useState([]);
+//   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
+ //  const [isError, setIsError] = useState(false);
 
-//   // Funzione per recuperare il profiloconst 
+  // Funzione per recuperare il profiloconst 
 //   const fetchProfile = async () => {
-//       setIsEnableSpinner(true);
+//     // setIsEnableSpinner(true);
 //       try {
-//         const response = await fetchWithAuth(`${url}`);
-//         setProfile(response.profiles);
-//         setIsError(false);
-//       } catch (error) {
+//          const response = await fetchWithAuth(`${url}`);
+//          console.log("Risposta completa:", response.profiles);
+      
+      
+//         setProfile( response.profiles);
+//         console.log("Risposta profiles:", response.profiles);
+        
+//        } catch (error) {
 //         console.error('Error loading...', error);
 //         setIsError(true);
-//       } finally {
-//         setIsEnableSpinner(false);
+//      } finally {
+//     //   setIsEnableSpinner(false);
 //       }
-//     };
+//      };
 
-//     // Effettua il fetch del profilo quando il componente è montato
-//     useEffect(() => {
-//       fetchProfile();
-//  }, []);
+// //     Effettua il fetch del profilo quando il componente è montato
+//       useEffect(() => {
+//           fetchProfile();
+//       }, [id]);
 
 //   console.log(profile);
 
-const { authorLogin, setAuthorLogin } = useContext(AuthContext);
-const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
- console.log(authorLogin);
-  
+
   return ( 
     <>
       {/* Mostra lo spinner di caricamento se isEnableSpinner è true
@@ -85,7 +93,7 @@ const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
         </div>
         <Row className='user__detail'>
           <Col xs={12} md={8}>
-            <h4 className='name mb-0 justify-content-start'>
+            <h4 className='name mb-0 justify-content-start mt-5'>
               {authorLogin.name} {authorLogin.surname}
             </h4>
             <p className='my-0 occupation'>{authorLogin.title}</p>
@@ -167,7 +175,7 @@ const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
       <Activity />
 
       {/* Sezione "Esperienze" */}
-      <Experiences id={authorLogin._id}  />
+     {/* <Experiences authorLogin={profile} /> */} 
 
       {/* Sezione "Competenze" */}
       <Skills/>
