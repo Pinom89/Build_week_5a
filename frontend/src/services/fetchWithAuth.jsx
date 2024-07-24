@@ -26,9 +26,10 @@ const fetchWithAuth = async (url, options = {}) => {
      });
  
      if (!response.ok) {
-       
-       throw new Error('Errore nella richiesta');
-     }
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+
      return await  response.json();
    } catch (error) {
      console.error("Errore nella richiesta:", error);

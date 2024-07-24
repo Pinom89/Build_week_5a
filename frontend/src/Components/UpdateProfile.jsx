@@ -4,15 +4,18 @@ import { Form, Modal } from "react-bootstrap";
 import { useState, useEffect } from 'react';
 import fetchWithAuth from "../services/fetchWithAuth"
 
-function UpdateProfile({ authorLogin }) {
+function UpdateProfile({ authorLogin , onProfileUpdate}) {
   // Stampa il profilo attuale nella console
   console.log('Il mio profilo: ', authorLogin);
+  if (!authorLogin) {
+    return null; 
+  }
+
 
   // Recupera il token di autorizzazione dalle variabili d'ambiente
  // const Token = process.env.TOKEN;
   // URL dell'API per aggiornare il profilo
-  const url = `http://localhost:5000/profile/${authorLogin._id}`;
-
+  const url =  `http://localhost:5000/profile/${authorLogin._id}` ;
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
   const [formDataProfile, setFormDataProfile] = useState({ 
@@ -42,6 +45,7 @@ function UpdateProfile({ authorLogin }) {
     }
   }, [authorLogin]);
 
+
   // Funzione per chiudere il modal
   const handleClose = () => setShow(false);
   // Funzione per aprire il modal
@@ -58,25 +62,34 @@ function UpdateProfile({ authorLogin }) {
 
   // Gestisce l'aggiornamento del profilo inviando i dati al server
 
-    const handleUpdateProfile = async () => {
+    const handleUpdateProfile = async (e) => {
+      e.preventDefault(); // Evita l'invio del prevent
+      if (!url) {
+        console.error("URL non valido per l'aggiornamento del profilo");
+        return;
+      }
       try {
-        await fetchWithAuth(url, {
+        const updatedProfile = await fetchWithAuth(url, {
           method: 'PATCH',
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formDataProfile),
         });
-     
+       
+        onProfileUpdate(updatedProfile); // Chiamata alla funzione di callback
         // console.log(data);
-        handleClose(); // Chiude il modal
-        // fetchProfile(); // Ricarica il profilo
+      
+        
+        setFormDataProfile(updatedProfile);
       } catch (error) {
         console.error("Errore durante l'aggiornamento del profilo:", error);
         // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
-      }
-    };
-  
+      } finally {
+        handleClose(); // Chiude il modal
+    }
+  };
+       
 
   return (
     <>
