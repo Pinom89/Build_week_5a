@@ -8,6 +8,24 @@ import Profile from "../models/profile.js";
 
 const router = express.Router(); // Crea un'istanza di Express.Router
 
+// Rotta per creare un nuovo Post
+router.post("/", cloudinaryUploader.single("image"), async (req, res) => {
+  // Crea un nuovo utente con i dati dal corpo della richiesta
+    try { 
+      const profile =  req.body;
+      if (req.file) {
+        profile.image = req.file.path; // Cloudinary restituirà direttamente il suo url
+      }
+      const newProfile = new Profile(profile); // Crea un nuovo utente con i dati forniti
+      await newProfile.save(); // Salva il nuovo utente nel database
+  
+  
+      res.status(201).json(newProfile); // Risponde con i dati del nuovo utente e uno status 201 (Created)
+    } catch (err) {
+      res.status(400).json({ message: err.message }); // Gestisce errori di validazione e risponde con un messaggio di errore
+    }
+  });
+
  // NEW! Proteggi le altre rotte con il middleware di autenticazione
  router.use(authMiddleware);
 
@@ -38,23 +56,7 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: err.message }); // Gestisce errori e risponde con un messaggio di errore
   }
 });
-// Rotta per creare un nuovo Post
-router.post("/", cloudinaryUploader.single("image"), async (req, res) => {
-  // Crea un nuovo utente con i dati dal corpo della richiesta
-    try { 
-      const profile =  req.body;
-      if (req.file) {
-        profile.image = req.file.path; // Cloudinary restituirà direttamente il suo url
-      }
-      const newProfile = new Profile(profile); // Crea un nuovo utente con i dati forniti
-      await newProfile.save(); // Salva il nuovo utente nel database
-  
-  
-      res.status(201).json(newProfile); // Risponde con i dati del nuovo utente e uno status 201 (Created)
-    } catch (err) {
-      res.status(400).json({ message: err.message }); // Gestisce errori di validazione e risponde con un messaggio di errore
-    }
-  });
+
   
 
 
