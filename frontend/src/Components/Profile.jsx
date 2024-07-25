@@ -59,10 +59,12 @@ function Profile() {
         </Row>
         <div className="d-flex justify-content-end ">
           {/* Componente per aggiornare il profilo */}
-          <UpdateProfile
-            authorLogin={authorLogin}
-            onProfileUpdate={handleProfileUpdate}
-          />
+          {isLoggedIn && authorLogin && (
+            <UpdateProfile
+              authorLogin={authorLogin}
+              onProfileUpdate={handleProfileUpdate}
+            />
+          )}
           {/* <button className='upgrade__profile p-0'><i className='fa-solid fa-pen'></i></button> */}
         </div>
         <Row className="user__detail">

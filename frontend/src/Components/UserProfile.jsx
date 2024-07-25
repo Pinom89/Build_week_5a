@@ -3,7 +3,7 @@ import '../style/Profile.css';
 // Importa la funzione useParams da react-router-dom per ottenere i parametri dell'URL
 import { useParams } from 'react-router-dom';
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // Importa i componenti necessari da react-bootstrap
 import { Alert, Col, Container, Row, Spinner } from 'react-bootstrap';
 // Importa i componenti per le varie sezioni del profilo utente
@@ -14,6 +14,8 @@ import Activity from './infoProfile/Activity';
 import Experiences from './infoProfile/Experiences';
 import Skills from './infoProfile/Skills';
 import fetchWithAuth from '../services/fetchWithAuth';
+import { AuthContext } from '../Context/AuthContext';
+import UpdateProfile from './UpdateProfile';
 
 function UserProfile() {
   // Utilizza useParams per ottenere i parametri dell'URL
@@ -28,6 +30,7 @@ function UserProfile() {
   
   // Definizione degli stati locali
   const [profile, setProfile] = useState([]);
+  const { authorLogin, isLoggedIn } = useContext(AuthContext);
   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -53,6 +56,10 @@ function UserProfile() {
     fetchData();
 }, [params._id]);
 
+const handleProfileUpdate = (updatedProfile) => {
+  setAuthorLogin((prevState) => ({ ...prevState, ...updatedProfile }));
+};
+
 
   return ( 
     <>
@@ -73,6 +80,16 @@ function UserProfile() {
         <Row className='profile__image'>
           <img className='image__user' src={profile.image} alt={profile.name} />
         </Row>
+        <div className="d-flex justify-content-end ">
+          {/* Componente per aggiornare il profilo */}
+          {isLoggedIn && profile.username === authorLogin.username && (
+            <UpdateProfile
+              authorLogin={authorLogin}
+              onProfileUpdate={handleProfileUpdate}
+            />
+          )}
+          {/* <button className='upgrade__profile p-0'><i className='fa-solid fa-pen'></i></button> */}
+        </div>
         
         {/* Dettagli dell'utente */}
         <Row className='user__detail mt-5'>
