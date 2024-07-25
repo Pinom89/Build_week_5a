@@ -64,7 +64,7 @@ function Profile() {
         </Row>
         <div className="d-flex justify-content-end ">
           {/* Componente per aggiornare il profilo */}
-          {isLoggedIn && authorLogin && (
+          {authorLogin && (
             <UpdateProfile
               authorLogin={authorLogin}
               onProfileUpdate={handleProfileUpdate}
