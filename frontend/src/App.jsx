@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Components/Navbar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 /*
 import '@fortawesome/fontawesome-free/css/all.min.css';*/
@@ -18,8 +18,19 @@ function App() {
   // const token = process.env.TOKEN;
   // console.log(token)
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authorLogin, setAuthorLogin] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      // Carica i dati dell'utente qui se necessario
+    }
+  }, []);
+
   return (
-    <AuthProvider>
+    <AuthProvider value={{ isLoggedIn, setIsLoggedIn, authorLogin, setAuthorLogin }}>
       <Router>
         <Navbar />
         <Routes>

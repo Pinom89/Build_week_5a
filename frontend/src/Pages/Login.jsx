@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, InputGroup, Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 export default function Login() {
   const [login, setLogin] = useState({
@@ -12,6 +13,8 @@ export default function Login() {
   const location = useLocation(); //  Accedo ai parametri dell'URL corrente
 
   const API_URL = "http://localhost:5000/";
+
+  const { setIsLoggedIn, setAuthorLogin } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +44,15 @@ export default function Login() {
       }
 
       const data = await response.json();
+
+      const userResponse = await fetch(`${API_URL}auth/me`, {
+        headers: {
+          'Authorization': `Bearer ${data.token}`
+        }
+      });
+      const userData = await userResponse.json();
+      setAuthorLogin(userData);
+
       localStorage.setItem("token", data.token);
 
       window.dispatchEvent(new Event("login"));

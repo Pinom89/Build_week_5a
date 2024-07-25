@@ -4,13 +4,10 @@ import "../style/Profile.css";
 import React, { useContext, useState, useEffect } from "react";
 // Importa i componenti necessari da react-bootstrap
 import {
-  Alert,
+  
   Col,
   Container,
   Row,
-  Spinner,
-  Button,
-  ProgressBar,
 } from "react-bootstrap";
 // Importa i componenti per le varie sezioni del profilo utente
 import Advised from "./infoProfile/Advised";
@@ -19,16 +16,29 @@ import Resources from "./infoProfile/Resources";
 import Activity from "./infoProfile/Activity";
 import Experiences from "./infoProfile/Experiences";
 import Skills from "./infoProfile/Skills";
-
 // Importa il componente UpdateProfile
 import UpdateProfile from "./UpdateProfile";
-
 import { AuthContext } from "../Context/AuthContext";
+import fetchWithAuth from "../services/fetchWithAuth";
 
 function Profile() {
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   //console.log(authorLogin._id);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (isLoggedIn) {
+        try {
+          const userData = await fetchWithAuth('http://localhost:5000/auth/me');
+          setAuthorLogin(userData);
+        } catch (error) {
+          console.error('Errore nel recupero dei dati utente:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [isLoggedIn, setAuthorLogin]);
 
   const handleProfileUpdate = (updatedProfile) => {
     setAuthorLogin((prevState) => ({ ...prevState, ...updatedProfile }));

@@ -11,7 +11,7 @@ import { AuthContext } from '../../Context/AuthContext';
 
 function Experiences({ profile }) {
   const { authorLogin, isLoggedIn } = useContext(AuthContext);
-  const [experiences, setExperience] = useState([]);
+  const [experiences, setExperiences] = useState([]);
   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
   const params = useParams();
@@ -26,8 +26,10 @@ function Experiences({ profile }) {
   const fetchExperiences = async () => {
     setIsEnableSpinner(true);
     try {
-      const data = await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`);
-      setExperience(data);
+      if (profile && profile._id) {
+        const data = await fetchWithAuth(`${urlExperiences}/${profile._id}/experiences`);
+        setExperiences(data);
+      }
       setIsError(false);
     } catch (error) {
       console.error('Error loading...', error);
@@ -39,7 +41,26 @@ function Experiences({ profile }) {
 
   useEffect(() => {
     fetchExperiences();
-  }, [idToUse]);
+  }, [profile]);
+
+
+  // const fetchExperiences = async () => {
+  //   setIsEnableSpinner(true);
+  //   try {
+  //     const data = await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`);
+  //     setExperience(data);
+  //     setIsError(false);
+  //   } catch (error) {
+  //     console.error('Error loading...', error);
+  //     setIsError(true);
+  //   } finally {
+  //     setIsEnableSpinner(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchExperiences();
+  // }, [idToUse]);
 
 
   return (

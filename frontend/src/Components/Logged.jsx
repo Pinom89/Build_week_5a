@@ -54,11 +54,11 @@ export default function Logged() {
       try {
         // Richiedi i dati dell'autore utilizzando il token di autenticazione
         const userData = await fetchWithAuth('http://localhost:5000/auth/me');
-        setAuthorLogin(userData); // Aggiorna il contesto dell'autore con i dati ricevuti
+        await  setAuthorLogin(userData); // Aggiorna il contesto dell'autore con i dati ricevuti
       } catch (error) {
         // Se c'è un errore nel recupero dei dati, mostra un errore e reindirizza alla pagina di login
         console.error('Errore nel recupero dei dati utente:', error);
-        navigate('/login'); // Redirige l'utente alla pagina di login in caso di errore
+        navigate('/'); // Redirige l'utente alla pagina di login in caso di errore
       }
     };
 
