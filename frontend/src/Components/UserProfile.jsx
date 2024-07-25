@@ -13,6 +13,7 @@ import Resources from './infoProfile/Resources';
 import Activity from './infoProfile/Activity';
 import Experiences from './infoProfile/Experiences';
 import Skills from './infoProfile/Skills';
+import fetchWithAuth from '../services/fetchWithAuth';
 
 function UserProfile() {
   // Utilizza useParams per ottenere i parametri dell'URL
@@ -20,10 +21,10 @@ function UserProfile() {
   // console.log(params.user); // Debug: stampa i parametri dell'utente
 
   // URL dell'API per la lettura dei profili
-  const url = 'https://striveschool-api.herokuapp.com/api/profile/';
+  const url = 'http://localhost:5000/profile/';
 
   // Recupero il token di autorizzazione
-  const Token = process.env.TOKEN;
+ // const Token = process.env.TOKEN;
   
   // Definizione degli stati locali
   const [profile, setProfile] = useState([]);
@@ -31,24 +32,27 @@ function UserProfile() {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    setIsEnableSpinner(true);
-    fetch(url + params._id, {
-      headers: {
-        Authorization: 'Bearer ' + Token,
-      },
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      // console.log(data); // Debug: stampa i dati ricevuti
-      setProfile(data);
-      setIsError(false);
-    })
-    .catch((error) => {
-      console.error('Error loading...', error);
-      setIsError(true);
-    })
-    .finally(() => setIsEnableSpinner(false)); 
-  }, [params._id])
+    const fetchData = async () => {
+        try {
+            setIsEnableSpinner(true);
+            const response = await fetchWithAuth(url + params._id, {
+      
+            });
+            
+            // console.log(data); // Debug: stampa i dati ricevuti
+            setProfile(response.profiles);
+            setIsError(false);
+        } catch (error) {
+            console.error('Error loading...', error);
+            setIsError(true);
+        } finally {
+            setIsEnableSpinner(false);
+        }
+    };
+
+    fetchData();
+}, [params._id]);
+
 
   return ( 
     <>

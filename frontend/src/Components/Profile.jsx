@@ -25,12 +25,12 @@ function Profile() {
   console.log(authorLogin._id);
   const id = authorLogin._id;
 
- 
+  const idToUse = id || params._id;
   // Definisce l'utente come "me" per il proprio profilo
   //  const login = 'auth/me';
 
 // URL dell'API per la lettura dei profili
-   const url = `http://localhost:5000/profile/${authorLogin._id}`;
+   const url = `http://localhost:5000/profile/${id}`;
 
   // Recupero il token di autorizzazione
   //const Token = process.env.TOKEN;

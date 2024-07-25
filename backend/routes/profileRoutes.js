@@ -56,7 +56,7 @@ router.post("/", cloudinaryUploader.single("image"), async (req, res) => {
   
 
  // NEW! Proteggi le altre rotte con il middleware di autenticazione
- // router.use(authMiddleware);
+   router.use(authMiddleware);
 
 
 // Rotta per ottenere un singolo Post

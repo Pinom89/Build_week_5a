@@ -28,7 +28,7 @@ function App() {
               element={<Login />} 
             />
           <Route
-              path="/profiles/:_id"
+              path="/profile/:_id"
               element={<OtherProfile />}
             />
             <Route

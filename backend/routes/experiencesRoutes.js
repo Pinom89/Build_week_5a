@@ -1,9 +1,8 @@
 import express from "express"; // Importa il pacchetto Express
 import cloudinaryUploader from "../config/claudinaryConfig.js";
 //import { v2 as cloudinary } from "cloudinary";  // per la cancellazione da cloudinary
-// import { authMiddleware } from "../middleware/authMiddleware.js";
 import Profile from "../models/profile.js";
-
+// import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router(); // Crea un'istanza di Express.Router
 

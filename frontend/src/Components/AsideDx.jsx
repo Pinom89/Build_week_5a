@@ -60,7 +60,7 @@ const AsideDx = () => {
         {/* Mappa i profili se ce ne sono, altrimenti mostra un messaggio */}
         {tenprofiles.length > 0 ? (
           tenprofiles.map((profile) => (
-            <Container onClick={() => navigate(`/profiles/${profile._id}`)} key={profile._id} className='select__user'>
+            <Container onClick={() => navigate(`/profile/${profile._id}`)} key={profile._id} className='select__user'>
               <Row className='justify-content-start my-2'>
               <Col sm={12} lg={3}>
               <img

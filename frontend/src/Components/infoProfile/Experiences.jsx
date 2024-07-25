@@ -1,6 +1,6 @@
 import { Col, Container, Row, Spinner, Alert, Card, ListGroup } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-//import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import ModalExperience from './ModalExperience';
 import AddExperience from '../AddExperience';
@@ -13,13 +13,16 @@ function Experiences({ authorLogin}) {
  // const Token = process.env.TOKEN;
   
   // Stati per gestire le esperienze, lo spinner e gli errori
-  const [Experiences, setExperience] = useState([]);
+  const [experiences, setExperience] = useState([]);
   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
-  //const params = useParams();
+  const params = useParams();
 
+  console.log(authorLogin);
+  console.log(params._id);
   // Usa l'ID fornito come prop o dall'URL
- // const idToUse = id || params._id;
+ const idToUse = authorLogin._id || params._id;
+ console.log(idToUse);
 
 
   const urlExperiences = 'http://localhost:5000/profile';
@@ -28,7 +31,7 @@ function Experiences({ authorLogin}) {
   const fetchExperiences = async () => {
     setIsEnableSpinner(true);
     try {
-     const data = await fetchWithAuth(`${urlExperiences}/${authorLogin._id}/experiences`);
+     const data = await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`);
       setExperience(data);
       setIsError(false);
     } catch (error) {
@@ -41,7 +44,7 @@ function Experiences({ authorLogin}) {
   // Effetto per caricare le esperienze al montaggio del componente o al cambio di ID
   useEffect(() => {
     fetchExperiences();
-  }, [authorLogin ]);
+  }, [authorLogin, idToUse]);
 
  
   return (
@@ -65,8 +68,8 @@ function Experiences({ authorLogin}) {
                 {/* Mostra un messaggio di errore se il caricamento fallisce */}
                 {isError && <div className='text-center mt-5'><Alert variant='danger'>Error loading...</Alert></div>}
                 {/* Mappa le esperienze se ce ne sono, altrimenti mostra un messaggio */}
-                {Experiences.length > 0 ? (
-                  Experiences.map((experience) => (
+                {experiences.length > 0 ? (
+                  experiences.map((experience) => (
                     <div key={experience._id}>
                       <Card className='p-0 mt-2'>
                         <Card.Header className='text-bold'>{experience.company}</Card.Header>
