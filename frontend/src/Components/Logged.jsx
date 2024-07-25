@@ -69,7 +69,7 @@ export default function Logged() {
       
         <NavDropdown.Item  
         variant= {isLoggedIn ? 'outline-danger' : 'outline-secondary'}
-        onClick={() => isLoggedIn ? handleLogout() : navigate('/')}
+        onClick={() => isLoggedIn ? handleLogout() : navigate('/home')}
         >
           {isLoggedIn ? 'Logout' : 'Login'}
         </NavDropdown.Item>

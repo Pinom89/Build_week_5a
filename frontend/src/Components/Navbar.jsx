@@ -1,17 +1,12 @@
 import React from 'react';
-// Importa i componenti necessari da react-bootstrap
 import { Navbar, Container, Nav, FormControl, InputGroup, NavDropdown } from 'react-bootstrap';
-// Importa il componente NavLink da react-router-dom
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import Logged from './Logged';
 
-// Definisce il componente LinkedInNavbar
 export default function LinkedInNavbar() {
   return (
-    // Definisce la barra di navigazione con stile e classi specifiche
-    <Navbar bg="white" expand="lg" className='position-absolute top-0 w-100 start-0' style={{height:'64px'}}>
+    <Navbar bg="white" expand="lg" className='position-absolute top-0 w-100 start-0' style={{ height: '64px' }}>
       <Container className='pt-1 pb-2'>
-        {/* Logo e barra di ricerca */}
         <NavLink to='/' className='logo-img me-4'>
           <img
             src="https://blog.waalaxy.com/wp-content/uploads/2021/01/index.png"
@@ -29,12 +24,9 @@ export default function LinkedInNavbar() {
             <i className="fas fa-search"></i>
           </InputGroup.Text>
         </InputGroup>
-
-        {/* Toggle per la visualizzazione mobile */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" className='me-3'/>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className='me-3' />
         <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse pt-md-5 pt-lg-0 ">
           <Nav className="m-auto nav">
-            {/* Collegamenti di navigazione */}
             <NavLink to="/home" className="nav-link d-flex flex-column align-items-center me-4" id='home'>
               <i className="fas fa-home mt-1"></i>
               <span>Home</span>
@@ -55,19 +47,17 @@ export default function LinkedInNavbar() {
               <i className="fas fa-bell mt-1"></i>
               <span>Notifiche</span>
             </Nav.Link>
-            {/* Dropdown per il profilo utente */}
             <NavDropdown title={<span className="d-flex flex-column align-items-center" id='profile'><i className="fas fa-user"></i>Tu</span>} id="nav-dropdown" className="d-flex flex-column align-items-center">
-              <NavDropdown.Item ><NavLink to="/" className='link-dark'/>Profilo</NavDropdown.Item>
+              <NavDropdown.Item as="div">
+                <NavLink to="/home" className='link-dark'>Profilo</NavLink>
+              </NavDropdown.Item>
               <NavDropdown.Item href="#settings">Impostazioni</NavDropdown.Item>
               <NavDropdown.Divider />
               <Logged /> {/* Componente Logged */}
             </NavDropdown>
             <div className='divider ms-5'></div>
-                  
-             </Nav>      
-
+          </Nav>
           <Nav>
-            {/* Dropdown per le aziende */}
             <NavDropdown title={<span className="d-flex flex-column align-items-center"><i className="bi bi-grid-3x3-gap-fill"></i>Per le aziende</span>} id="nav-dropdown-business" className="d-flex flex-column align-items-center">
               <NavDropdown.Item href="#business-profile">Profilo aziendale</NavDropdown.Item>
               <NavDropdown.Item href="#business-settings">Impostazioni aziendali</NavDropdown.Item>
@@ -81,3 +71,4 @@ export default function LinkedInNavbar() {
     </Navbar>
   );
 }
+

@@ -30,7 +30,7 @@ function UserProfile() {
   
   // Definizione degli stati locali
   const [profile, setProfile] = useState([]);
-  const { authorLogin, isLoggedIn } = useContext(AuthContext);
+  const { authorLogin, setAuthorLogin, isLoggedIn } = useContext(AuthContext);
   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -80,7 +80,7 @@ const handleProfileUpdate = (updatedProfile) => {
         <Row className='profile__image'>
           <img className='image__user' src={profile.image} alt={profile.name} />
         </Row>
-        <div className="d-flex justify-content-end ">
+        <div className="d-flex justify-content-end">
           {/* Componente per aggiornare il profilo */}
           {isLoggedIn && profile.username === authorLogin.username && (
             <UpdateProfile
@@ -94,7 +94,7 @@ const handleProfileUpdate = (updatedProfile) => {
         {/* Dettagli dell'utente */}
         <Row className='user__detail mt-5'>
           <Col xs={12} md={8}>
-            <h4 className='name mb-0 justify-content-start'>
+            <h4 className='name mb-0 justify-content-start mt-3'>
               {profile.name} {profile.surname}
             </h4>
             <p className='my-0 occupation'>{profile.title}</p>
@@ -160,7 +160,7 @@ const handleProfileUpdate = (updatedProfile) => {
       <Activity />
 
       {/* Sezione "Esperienze" */}
-      <Experiences authorLogin={profile} />
+      <Experiences profile={profile} />
 
       {/* Sezione "Competenze" */}
       <Skills />

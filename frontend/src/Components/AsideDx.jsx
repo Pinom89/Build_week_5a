@@ -1,17 +1,20 @@
 // Importa il file CSS per lo stile del componente
 import '../style/Profile.css'; 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // Importa i CSS di Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Spinner, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import ModalUsers from './ModalUsers';
 import fetchWithAuth from '../services/fetchWithAuth';
+import { AuthContext } from '../Context/AuthContext';
 
 const AsideDx = () => {
   // URL per l'API dei profili
   const url = 'http://localhost:5000/profile';
+
+  const { authorLogin, setAuthorLogin } = useContext(AuthContext);
 
   // Stati per gestire i profili, lo spinner e gli errori
   const [profiles, setProfiles] = useState([]);
@@ -59,7 +62,8 @@ const AsideDx = () => {
       <div className="list-group list-group-flush p-4">
         {/* Mappa i profili se ce ne sono, altrimenti mostra un messaggio */}
         {tenprofiles.length > 0 ? (
-          tenprofiles.map((profile) => (
+          tenprofiles.filter((prof) => prof.username != authorLogin.username)
+          .map((profile) => (
             <Container onClick={() => navigate(`/profile/${profile._id}`)} key={profile._id} className='select__user'>
               <Row className='justify-content-start my-2'>
               <Col sm={12} lg={3}>

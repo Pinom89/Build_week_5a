@@ -28,7 +28,7 @@ import { AuthContext } from "../Context/AuthContext";
 function Profile() {
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  console.log(authorLogin._id);
+  //console.log(authorLogin._id);
 
   const handleProfileUpdate = (updatedProfile) => {
     setAuthorLogin((prevState) => ({ ...prevState, ...updatedProfile }));
@@ -69,7 +69,7 @@ function Profile() {
         </div>
         <Row className="user__detail">
           <Col xs={12} md={8}>
-            <h4 className="name mb-0 justify-content-start mt-5">
+            <h4 className="name mb-0 justify-content-start mt-3">
               {authorLogin.name} {authorLogin.surname}
             </h4>
             <p className="my-0 occupation">{authorLogin.title}</p>
@@ -150,7 +150,7 @@ function Profile() {
       <Activity />
 
       {/* Sezione "Esperienze" */}
-      <Experiences authorLogin={authorLogin} />
+      <Experiences profile={authorLogin} />
 
       {/* Sezione "Competenze" */}
       <Skills />

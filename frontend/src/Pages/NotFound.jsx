@@ -15,7 +15,7 @@ export default function NotFound() {
       {/* Paragrafo con un messaggio di scuse e la classe CSS 'text-dark' */}
       <p className='text-dark'>Siamo spiacenti, la pagina che stai cercando non esiste.</p>
       {/* Link che porta alla home page con la classe CSS 'btn_back' */}
-      <Link to='/' className='btn_back'>Vai a Home</Link>
+      <Link to='/home' className='btn_back'>Vai a Home</Link>
     </Container>
   )
 }

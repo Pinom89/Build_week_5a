@@ -2,9 +2,12 @@ import express from "express"; // Importa il pacchetto Express
 import cloudinaryUploader from "../config/claudinaryConfig.js";
 //import { v2 as cloudinary } from "cloudinary";  // per la cancellazione da cloudinary
 import Profile from "../models/profile.js";
-// import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router(); // Crea un'istanza di Express.Router
+
+ // NEW! Proteggi le altre rotte con il middleware di autenticazione
+ router.use(authMiddleware);
 
 // mostra tutte le esperienze di un singolo utente
 router.get("/:id/experiences", async (req, res) => {

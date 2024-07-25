@@ -8,6 +8,8 @@ import Profile from "../models/profile.js";
 
 const router = express.Router(); // Crea un'istanza di Express.Router
 
+ // NEW! Proteggi le altre rotte con il middleware di autenticazione
+ router.use(authMiddleware);
 
 router.get("/", async (req, res) => {
   try {
@@ -55,8 +57,7 @@ router.post("/", cloudinaryUploader.single("image"), async (req, res) => {
   });
   
 
- // NEW! Proteggi le altre rotte con il middleware di autenticazione
-   router.use(authMiddleware);
+
 
 
 // Rotta per ottenere un singolo Post
