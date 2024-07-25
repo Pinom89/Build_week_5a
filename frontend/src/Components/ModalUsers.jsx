@@ -36,7 +36,7 @@ function ModalUsers({ profiles }) {
         <Modal.Body className='modal-body-scroll bg-light'>
           {/* Mappa i profili e crea un container per ciascuno */}
           {profiles.map((profile) => (
-            <Container onClick={() => navigate(`/profiles/${profile._id}`)} key={profile._id} className='select__user'>
+            <Container onClick={() => navigate(`/profile/${profile._id}`)} key={profile._id} className='select__user'>
               <Row className='justify-content-start my-2'>
                 <Col md={3}>
                   {/* Immagine del profilo */}

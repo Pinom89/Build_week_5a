@@ -35,7 +35,7 @@ export default function LinkedInNavbar() {
         <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse pt-md-5 pt-lg-0 ">
           <Nav className="m-auto nav">
             {/* Collegamenti di navigazione */}
-            <NavLink to="/" className="nav-link d-flex flex-column align-items-center me-4" id='home'>
+            <NavLink to="/home" className="nav-link d-flex flex-column align-items-center me-4" id='home'>
               <i className="fas fa-home mt-1"></i>
               <span>Home</span>
             </NavLink>
@@ -60,10 +60,10 @@ export default function LinkedInNavbar() {
               <NavDropdown.Item ><NavLink to="/" className='link-dark'/>Profilo</NavDropdown.Item>
               <NavDropdown.Item href="#settings">Impostazioni</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#logout">Logout</NavDropdown.Item>
+              <Logged /> {/* Componente Logged */}
             </NavDropdown>
             <div className='divider ms-5'></div>
-            <Logged /> {/* Componente Logged */}       
+                  
              </Nav>      
 
           <Nav>

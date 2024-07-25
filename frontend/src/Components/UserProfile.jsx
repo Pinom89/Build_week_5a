@@ -40,7 +40,7 @@ function UserProfile() {
             });
             
             // console.log(data); // Debug: stampa i dati ricevuti
-            setProfile(response.profiles);
+            setProfile(response);
             setIsError(false);
         } catch (error) {
             console.error('Error loading...', error);
@@ -143,7 +143,7 @@ function UserProfile() {
       <Activity />
 
       {/* Sezione "Esperienze" */}
-      <Experiences id={profile._id} />
+      <Experiences authorLogin={profile} />
 
       {/* Sezione "Competenze" */}
       <Skills />
