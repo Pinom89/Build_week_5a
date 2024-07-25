@@ -24,8 +24,9 @@ function UpdateProfile({ authorLogin, onProfileUpdate }) {
     area: "",
     title: "",
     bio: "",
-    image: "",
+  
   });
+  const [image, setImage] = useState(null);
 
   // Effettua il popolamento dei dati del modulo quando il profilo cambia
   useEffect(() => {
@@ -42,6 +43,10 @@ function UpdateProfile({ authorLogin, onProfileUpdate }) {
     }
   }, [authorLogin]);
 
+
+
+
+
   // Funzione per chiudere il modal
   const handleClose = () => setShow(false);
   // Funzione per aprire il modal
@@ -56,21 +61,38 @@ function UpdateProfile({ authorLogin, onProfileUpdate }) {
     });
   };
 
+
+  // Gestisce i cambiamenti dell'immagine
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0])
+  };
   // Gestisce l'aggiornamento del profilo inviando i dati al server
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault(); // Evita l'invio del prevent
+  // Crea un oggetto FormData per inviare i dati del patch al server.
+    const formData = new FormData();
+    formData.append('name', formDataProfile.name);
+    formData.append('surname', formDataProfile.surname);
+    formData.append('username', formDataProfile.username);
+    formData.append('area', formDataProfile.area);
+    formData.append('title', formDataProfile.title);
+    formData.append('bio', formDataProfile.bio);
+   
+  
+    if (image) {
+      formData.append('image', image);
+    }
+  
+
     if (!url) {
       console.error("URL non valido per l'aggiornamento del profilo");
       return;
     }
     try {
       const updatedProfile = await fetchWithAuth(url, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataProfile),
+        method: "PATCH",    
+        body: formData,
       });
 
       onProfileUpdate(updatedProfile); // Chiamata alla funzione di callback
@@ -172,6 +194,15 @@ function UpdateProfile({ authorLogin, onProfileUpdate }) {
                 name="bio"
                 value={formDataProfile.bio}
                 onChange={handleProfileChange}
+              />
+            </Form.Group>
+            {/* Campo Immagine Profilo */}
+            <Form.Group className="mb-3">
+              <Form.Label>Immagine profilo</Form.Label>
+              <Form.Control
+                type="file"
+                name="image"
+                onChange={handleFileChange}
               />
             </Form.Group>
           </Form>
