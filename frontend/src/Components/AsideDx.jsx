@@ -7,14 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Spinner, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import ModalUsers from './ModalUsers';
+import fetchWithAuth from '../services/fetchWithAuth';
 
 const AsideDx = () => {
   // URL per l'API dei profili
-  const url = 'https://striveschool-api.herokuapp.com/api/profile/';
+  const url = 'http://localhost:5000/profile';
 
   // Stati per gestire i profili, lo spinner e gli errori
   const [profiles, setProfiles] = useState([]);
-  const Token = process.env.TOKEN; // Token di autenticazione per l'API
+  //const Token = process.env.TOKEN; // Token di autenticazione per l'API
   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
@@ -26,19 +27,12 @@ const AsideDx = () => {
     const fetchProfiles = async () => {
       setIsEnableSpinner(true);
       try {
-        const response = await fetch(url, {
-          method: 'GET',
+        const data = await fetchWithAuth(url, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + Token,
           },
         });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setProfiles(data);
+        setProfiles(data.profiles);
         setIsEnableSpinner(false);
         setIsError(false);
       }    
@@ -51,7 +45,7 @@ const AsideDx = () => {
     fetchProfiles();
   }, []);
 
-  console.log(profiles);
+  //console.log(profiles);
 
   return (
     <section className="card" tabIndex="-1" data-view-name="profile-card">

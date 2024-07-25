@@ -25,7 +25,7 @@ export default function Home() {
                     </Col>
                     {/* Componente Colonna, 4 su 12 colonne per il componente AsideDx */}
                     <Col md={4}>
-                     {/*   <AsideDx />*/}
+                        <AsideDx />
                     </Col>
                 </Row>
             </Container>
