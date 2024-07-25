@@ -2,8 +2,7 @@
 import { Form, Modal } from "react-bootstrap";
 // Importa le funzioni useState e useEffect da React
 import { useState, useEffect } from 'react';
-import fetchWithAuth from "../services/fetchWithAuth"
-
+import fetchWithAuth from "../services/fetchWithAuth";
 function UpdateProfile({ authorLogin , onProfileUpdate}) {
   // Stampa il profilo attuale nella console
   console.log('Il mio profilo: ', authorLogin);

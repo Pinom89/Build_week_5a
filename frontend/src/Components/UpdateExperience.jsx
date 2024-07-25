@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 // Importa i componenti Form e Modal da react-bootstrap
 import { Form, Modal } from "react-bootstrap";
 // Importa la funzione format da date-fns per la formattazione delle date
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
+import fetchWithAuth from "../services/fetchWithAuth";
 
-function UpdateExperience({ id, idExp, experience, fetchExperiences }) {
+function UpdateExperience({ authorLogin, experience, fetchExperiences }) {
   // Stampa l'esperienza attuale nella console
  // console.log('La mia esperienza: ', experience);
 
   // Recupera il token di autorizzazione dalle variabili d'ambiente
   //const Token = process.env.TOKEN;
   // URL dell'API per aggiornare l'esperienza
-  const url = `http://localhost:5000/profile/${id}/experiences/${idExp}`;
+  const url = `http://localhost:5000/profile/${authorLogin._id}/experiences/${experience._id}`;
 
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
@@ -56,7 +57,7 @@ function UpdateExperience({ id, idExp, experience, fetchExperiences }) {
   // Gestisce l'aggiornamento dell'esperienza inviando i dati al server
   const handleUpdateExperience = async () => {
     try {
-      fetchWithAuth(url, {
+      await fetchWithAuth(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

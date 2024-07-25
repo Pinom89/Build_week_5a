@@ -1,24 +1,26 @@
 import { Col, Container, Row, Spinner, Alert, Card, ListGroup } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import ModalExperience from './ModalExperience';
 import AddExperience from '../AddExperience';
 import UpdateExperience from '../UpdateExperience';
 import DeleteExperience from '../DeleteExperience';
+import fetchWithAuth from '../../services/fetchWithAuth';
 
 // Componente per visualizzare le esperienze lavorative dell'utente
-function Experiences({ id}) {
+function Experiences({ authorLogin}) {
  // const Token = process.env.TOKEN;
   
   // Stati per gestire le esperienze, lo spinner e gli errori
   const [Experiences, setExperience] = useState([]);
   const [isEnableSpinner, setIsEnableSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
-  const params = useParams();
+  //const params = useParams();
 
   // Usa l'ID fornito come prop o dall'URL
-  const idToUse = id || params._id;
+ // const idToUse = id || params._id;
+
 
   const urlExperiences = 'http://localhost:5000/profile';
 
@@ -26,7 +28,7 @@ function Experiences({ id}) {
   const fetchExperiences = async () => {
     setIsEnableSpinner(true);
     try {
-     const data = await fetchWithAuth(`${urlExperiences}/${idToUse}/experiences`)
+     const data = await fetchWithAuth(`${urlExperiences}/${authorLogin._id}/experiences`);
       setExperience(data);
       setIsError(false);
     } catch (error) {
@@ -39,8 +41,9 @@ function Experiences({ id}) {
   // Effetto per caricare le esperienze al montaggio del componente o al cambio di ID
   useEffect(() => {
     fetchExperiences();
-  }, [id, params._id]);
+  }, [authorLogin ]);
 
+ 
   return (
     <Container className='content__analisi content__info__profile p-4'>
       <Row className='user__detail'>
@@ -48,9 +51,9 @@ function Experiences({ id}) {
           <div className='d-flex align-items-center justify-content-between'>
             <h5 className='name mb-0'>Esperienze</h5>
             {/* Mostra il pulsante per aggiungere esperienza solo se l'utente è loggato */}
-            {login === 'me' ? (
+            {authorLogin ? (
               <div className='mx-3'>
-                <AddExperience id={id} idToUse={idToUse} fetchExperiences={fetchExperiences} />
+              <AddExperience authorLogin={authorLogin} fetchExperiences={fetchExperiences} />
               </div>
             ) : ''}
           </div>
@@ -85,8 +88,8 @@ function Experiences({ id}) {
                           <div className="card-footer mt-2">
                             <ModalExperience experience={experience} />
                             {/* Mostra i pulsanti di modifica e eliminazione solo se l'utente è loggato */}
-                            {login === 'me' ? (<UpdateExperience id={id} idExp={experience._id} experience={experience} fetchExperiences={fetchExperiences} />) : ''}
-                            {login === 'me' ? (<DeleteExperience id={id} idExp={experience._id} fetchExperiences={fetchExperiences} />) : ''}
+                            {authorLogin ? (<UpdateExperience authorLogin={authorLogin} experience={experience} fetchExperiences={fetchExperiences} />) : ''}
+                            {authorLogin ? (<DeleteExperience authorLogin={authorLogin} experience={experience} fetchExperiences={fetchExperiences} />) : ''}
                           </div>
                         </Card.Body>
                       </Card>

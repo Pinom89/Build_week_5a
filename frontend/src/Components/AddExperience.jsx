@@ -1,8 +1,9 @@
 import { Form, Modal } from "react-bootstrap";
 import { useState } from 'react';
+import fetchWithAuth from "../services/fetchWithAuth"
 
 // Componente per aggiungere una nuova esperienza lavorativa
-function AddExperience({ id, fetchExperiences }) {
+function AddExperience({ authorLogin, fetchExperiences }) {
   
   // Stato per controllare la visibilità del modal
   const [show, setShow] = useState(false);
@@ -13,7 +14,7 @@ function AddExperience({ id, fetchExperiences }) {
   // const Token = process.env.TOKEN;
 
   // URL per l'API di aggiunta esperienza
-  const url = `http://localhost:5000/profile/${id}/experiences`;
+  const url = `http://localhost:5000/profile/${authorLogin._id}/experiences`;
 
   // Stato per i dati del form dell'esperienza
   const [FormDataExperience, setFormDataExperience] = useState({

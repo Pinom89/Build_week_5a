@@ -14,7 +14,7 @@ import Skills from './infoProfile/Skills';
 
 // Importa il componente UpdateProfile
 import UpdateProfile from './UpdateProfile';
-import fetchWithAuth from '../services/fetchWithAuth';
+
 import {AuthContext} from "../Context/AuthContext"
 
 
@@ -178,7 +178,7 @@ const handleProfileUpdate = (updatedProfile) => {
       <Activity />
 
       {/* Sezione "Esperienze" */}
-     {/* <Experiences authorLogin={profile} /> */} 
+    <Experiences authorLogin={authorLogin} /> 
 
       {/* Sezione "Competenze" */}
       <Skills/>

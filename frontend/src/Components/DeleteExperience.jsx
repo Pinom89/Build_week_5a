@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-
+import fetchWithAuth from "../services/fetchWithAuth";
 // Componente per eliminare un'esperienza lavorativa
-function DeleteExperience({ id, idExp, fetchExperiences }) {
+function DeleteExperience({authorLogin, experience, fetchExperiences}) {
   // URL per l'API di eliminazione dell'esperienza
-  const url = `http://localhost:5000/profile/${id}/experiences/${idExp}`;
+  const url = `http://localhost:5000/profile/${authorLogin._id}/experiences/${experience._id}`;
 
   // Stato per controllare la visibilità del modal
   const [show, setShow] = useState(false);
@@ -19,11 +19,12 @@ function DeleteExperience({ id, idExp, fetchExperiences }) {
   // Funzione per gestire l'eliminazione dell'esperienza
   const handleElimina = async () => {
     try {
-       fetchWithAuth(url, {
+        await fetchWithAuth(url, {
         method: 'DELETE',
       });
         handleClose();
         await fetchExperiences();
+       
     } catch (error) {
       console.error('Errore durante l\'eliminazione:', error);
       // Qui puoi aggiungere la gestione dell'errore, come mostrare un messaggio all'utente
