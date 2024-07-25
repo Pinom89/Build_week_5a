@@ -36,11 +36,6 @@ function Profile() {
 
   return (
     <>
-      {/* Mostra lo spinner di caricamento se isEnableSpinner è true
-      {isEnableSpinner && <div className='text-center mt-5'><Spinner animation='grow' /></div>}
-      {/* Mostra un messaggio di errore se isError è true */}
-      {/* {isError && <div className='text-center mt-5'><Alert variant='danger'>Error loading...</Alert></div>} */}
-
       <Container className="pb-2 border-0 content__card content__profile">
         {/* Sezione background del profilo */}
         <Row className="profile__bg">
@@ -69,7 +64,7 @@ function Profile() {
         </div>
         <Row className="user__detail">
           <Col xs={12} md={8}>
-            <h4 className="name mb-0 justify-content-start mt-3">
+            <h4 className="name mb-0 justify-content-start mt-5">
               {authorLogin.name} {authorLogin.surname}
             </h4>
             <p className="my-0 occupation">{authorLogin.title}</p>

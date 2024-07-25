@@ -78,7 +78,7 @@ function AddExperience({ authorLogin, fetchExperiences }) {
       </button>
 
       {/* Modal per inserire una nuova esperienza */}
-      <Modal show={show} onHide={handleClose}>
+      <Modal size='lg' show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Inserisci nuova esperienza</Modal.Title>
         </Modal.Header>

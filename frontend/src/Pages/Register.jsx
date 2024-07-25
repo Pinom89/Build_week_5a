@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import fetchWithAuth from '../services/fetchWithAuth';
 
 export default function Register() {
@@ -61,6 +61,12 @@ export default function Register() {
   <Row>
     <Col>
       <h2 className='mt-3'>Registra il tuo utente</h2>
+      <h5>
+        Sei registrato accedi alla piattaforma{" "}
+        <Link style={{ cursor: "pointer", color: "blue" }} to="/">
+          qui
+        </Link>
+      </h5>
       <Form onSubmit={handleRegisterSubmit}>
         <InputGroup className="mb-3 mt-5">
           <Form.Control
@@ -129,6 +135,7 @@ export default function Register() {
         <Button
           variant="dark"
           type="submit"
+           className="add__btn mx-3 mt-3"
         >
           Crea Nuovo Utente
         </Button>
@@ -141,8 +148,9 @@ export default function Register() {
             username: "",
             password: ""
           })}
+          className="btn__altro mx-3 mt-3"
         > 
-          Reset
+          Resetta
         </Button>
       </Form>
     </Col>

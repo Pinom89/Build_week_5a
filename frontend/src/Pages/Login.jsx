@@ -86,10 +86,6 @@ export default function Login() {
     window.location.href = "http://localhost:5000/auth/google";
   };
 
-  const handleGitHubLogin = () => {
-    // Reindirizziamo l'utente all'endpoint del backend che inizia il processo di autenticazione
-    window.location.href = "http://localhost:5000/auth/github";
-  };
   return (
     <Container>
       <Row>
@@ -117,6 +113,7 @@ export default function Login() {
 
             <InputGroup className="mb-3">
               <Form.Control
+                className=""
                 placeholder="Password"
                 name="password"
                 aria-label="Password"
@@ -127,10 +124,19 @@ export default function Login() {
               />
             </InputGroup>
 
-            <Button variant="dark" type="submit" className="me-2">
+            <Button 
+              variant="dark" 
+              type="submit" 
+              className="add__btn mx-3 mt-3"
+            >
               Accedi
             </Button>
-            <Button variant="outline-dark" onClick={handleReset} type="button">
+            <Button 
+              variant="outline-dark" 
+              onClick={handleReset} 
+              type="button"
+              className="btn__altro mx-3 mt-3"
+            >
               Resetta
             </Button>
           </Form>
@@ -143,18 +149,9 @@ export default function Login() {
             onClick={handleGoogleLogin}
             type="button"
             size="md"
+            className="profile__button open__to__btn mx-3 mt-3"
           >
             Login con Google
-          </Button>
-        </Col>
-        <Col className="mt-3">
-          <Button
-            variant="primary"
-            onClick={handleGitHubLogin}
-            type="button"
-            size="md"
-          >
-            Login con Github
           </Button>
         </Col>
       </Row>

@@ -17,7 +17,7 @@ function Experiences({ profile }) {
   const params = useParams();
 
   // Use the ID from props or URL parameters
-  const idToUse = profile._id || params._id;
+  const idToUse = authorLogin._id || params._id;
 
   console.log(idToUse);
 

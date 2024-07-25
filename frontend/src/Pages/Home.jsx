@@ -3,7 +3,6 @@ import { Col, Container, Row } from "react-bootstrap"; // Importa i componenti n
 
 import Profile from "../Components/Profile"; // Importa il componente Profile
 import AsideDx from "../Components/AsideDx"; // Importa il componente AsideDx
-import { AuthContext } from "../Context/AuthContext";
 
 // Definisce il componente Home come esportazione predefinita
 export default function Home() {
