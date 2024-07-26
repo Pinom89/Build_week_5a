@@ -16,13 +16,13 @@ router.post('/login', async (req, res) => {
     const profile = await Profile.findOne({ email });
 
     if (!profile) {
-      return res.status(401).json({ message: 'Credenziali non valide...' });
+      return res.status(401).json({ message: 'Profilo non trovato..' });
     }
 
     const isMatch = await profile.comparePassword(password);
 
     if (!isMatch) {
-      return res.status(401).json({ message: 'Credenziali non trovate...' });
+      return res.status(401).json({ message: 'Password errata' });
     }
 
     const token = await generateJWT({ id: profile._id });
@@ -45,6 +45,19 @@ router.get('/me', authMiddleware, (req, res) => {
   }
 });
 
+
+
+// Rotte Google Login
+     router.get(
+        "/google",
+        passport.authenticate("google", {
+        scope: ["profile", "email"]
+        })  
+    ) 
+        // Questo endpoint inizia il flusso di autenticazione OAuth con Google
+        // 'google' si riferisce alla strategia GoogleStrategy configurata in passportConfig.js
+        // scope: specifica le informazioni richiediamo a Google (profilo e email)
+    // Rotta di callback per l'autenticazione Google
 
 
 
