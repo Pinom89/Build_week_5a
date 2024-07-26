@@ -36,7 +36,7 @@ const corsOptions = {
     // Queste sono gli URL da cui il nostro frontend farà richieste al backend.
     const whitelist = [
       'http://localhost:5173',
-      'http://build-week-5a.vercel.app',
+      'https://build-week-5a.vercel.app',
       'https://build-week-5a.onrender.com'
     ];
 
