@@ -20,7 +20,7 @@ import UpdateProfile from './UpdateProfile';
 function UserProfile() {
   // Utilizza useParams per ottenere i parametri dell'URL
   const params = useParams();
-  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL ||"http://localhost:5000";
   const urlprofile = '/profile/';
 
   // Definizione degli stati locali

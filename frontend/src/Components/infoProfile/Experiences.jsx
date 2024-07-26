@@ -20,7 +20,7 @@ function Experiences({ profile }) {
   const idToUse = authorLogin._id || params._id;
 
   console.log(idToUse);
-  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL ||"http://localhost:5000";
   const urlExperiences = '/profile';
 
   const fetchExperiences = async () => {

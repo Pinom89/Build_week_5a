@@ -7,7 +7,7 @@ function UpdateProfile({ authorLogin, onProfileUpdate }) {
   // Stampa il profilo attuale nella console
   console.log("Il mio profilo: ", authorLogin);
 
-  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL ||"http://localhost:5000";
   if (!authorLogin) {
     return null;
   }

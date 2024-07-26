@@ -5,7 +5,7 @@ import fetchWithAuth from "../services/fetchWithAuth";
 function DeleteExperience({authorLogin, experience, fetchExperiences}) {
   // URL per l'API di eliminazione dell'esperienza
 
-  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL ||"http://localhost:5000";
   
   const url = `${API}/profile/${authorLogin._id}/experiences/${experience._id}`;
 

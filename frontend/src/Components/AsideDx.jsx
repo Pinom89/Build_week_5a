@@ -12,7 +12,7 @@ import { AuthContext } from '../Context/AuthContext';
 
 const AsideDx = () => {
   // URL per l'API dei profili
-  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL ||"http://localhost:5000";
   const urlProfiles = '/profile';
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
 

@@ -25,7 +25,7 @@ function Profile() {
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const API = import.meta.env.VITE_API_URL ||"http://localhost:5000";
   //console.log(authorLogin._id);
   useEffect(() => {
     const fetchUserData = async () => {
