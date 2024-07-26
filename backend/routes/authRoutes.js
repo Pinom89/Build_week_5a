@@ -45,7 +45,7 @@ router.get('/me', authMiddleware, (req, res) => {
 
 
 // Definisci l'URL del frontend usando una variabile d'ambiente
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173/';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 
 router.get(
