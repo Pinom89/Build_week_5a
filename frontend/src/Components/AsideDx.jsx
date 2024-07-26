@@ -12,8 +12,8 @@ import { AuthContext } from '../Context/AuthContext';
 
 const AsideDx = () => {
   // URL per l'API dei profili
-  const url = 'http://localhost:5000/profile';
-
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const urlProfiles = '/profile';
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
 
   // Stati per gestire i profili, lo spinner e gli errori
@@ -30,7 +30,7 @@ const AsideDx = () => {
     const fetchProfiles = async () => {
       setIsEnableSpinner(true);
       try {
-        const data = await fetchWithAuth(url, {
+        const data = await fetchWithAuth(API + urlProfiles, {
           headers: {
             'Content-Type': 'application/json',
           },

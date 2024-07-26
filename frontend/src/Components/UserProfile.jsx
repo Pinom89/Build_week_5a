@@ -20,14 +20,9 @@ import UpdateProfile from './UpdateProfile';
 function UserProfile() {
   // Utilizza useParams per ottenere i parametri dell'URL
   const params = useParams();
-  // console.log(params.user); // Debug: stampa i parametri dell'utente
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  const urlprofile = '/profile/';
 
-  // URL dell'API per la lettura dei profili
-  const url = 'http://localhost:5000/profile/';
-
-  // Recupero il token di autorizzazione
- // const Token = process.env.TOKEN;
-  
   // Definizione degli stati locali
   const [profile, setProfile] = useState([]);
   const { authorLogin, setAuthorLogin, isLoggedIn } = useContext(AuthContext);
@@ -38,7 +33,7 @@ function UserProfile() {
     const fetchData = async () => {
         try {
             setIsEnableSpinner(true);
-            const response = await fetchWithAuth(url + params._id, {
+            const response = await fetchWithAuth(API + urlprofile + params._id, {
       
             });
             

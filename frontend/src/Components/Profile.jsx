@@ -24,12 +24,14 @@ import fetchWithAuth from "../services/fetchWithAuth";
 function Profile() {
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
   //console.log(authorLogin._id);
   useEffect(() => {
     const fetchUserData = async () => {
       if (isLoggedIn) {
         try {
-          const userData = await fetchWithAuth('http://localhost:5000/auth/me');
+          const userData = await fetchWithAuth(`${API}/auth/me`);
           setAuthorLogin(userData);
         } catch (error) {
           console.error('Errore nel recupero dei dati utente:', error);

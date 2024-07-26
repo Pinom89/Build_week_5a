@@ -8,7 +8,7 @@ import {AuthContext} from "../Context/AuthContext"
 
 
 export default function Logged() {
-
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
   const { authorLogin, setAuthorLogin } = useContext(AuthContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
@@ -53,7 +53,7 @@ export default function Logged() {
     const fetchAuthor = async () => {
       try {
         // Richiedi i dati dell'autore utilizzando il token di autenticazione
-        const userData = await fetchWithAuth('http://localhost:5000/auth/me');
+        const userData = await fetchWithAuth(`${API}/auth/me`);
         await  setAuthorLogin(userData); // Aggiorna il contesto dell'autore con i dati ricevuti
       } catch (error) {
         // Se c'è un errore nel recupero dei dati, mostra un errore e reindirizza alla pagina di login

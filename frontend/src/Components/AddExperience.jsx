@@ -10,11 +10,10 @@ function AddExperience({ authorLogin, fetchExperiences }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // Token di autenticazione per l'API
-  // const Token = process.env.TOKEN;
 
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
   // URL per l'API di aggiunta esperienza
-  const url = `http://localhost:5000/profile/${authorLogin._id}/experiences`;
+  const url = `${API}/profile/${authorLogin._id}/experiences`;
 
   // Stato per i dati del form dell'esperienza
   const [FormDataExperience, setFormDataExperience] = useState({

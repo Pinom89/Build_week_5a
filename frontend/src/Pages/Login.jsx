@@ -11,8 +11,8 @@ export default function Login() {
 
   const navigate = useNavigate(); // Inizializza il navigatore per cambiare pagina
   const location = useLocation(); //  Accedo ai parametri dell'URL corrente
-
-  const API_URL = "http://localhost:5000/";
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
+  
 
   const { setIsLoggedIn, setAuthorLogin } = useContext(AuthContext);
 
@@ -27,7 +27,7 @@ export default function Login() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}auth/login`, {
+      const response = await fetch(`${API}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export default function Login() {
   // Funzione per gestire il login con Google
   const handleGoogleLogin = () => {
     // Reindirizziamo l'utente all'endpoint del backend che inizia il processo di autenticazione
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href =`${API}/auth/google`;
   };
 
   return (

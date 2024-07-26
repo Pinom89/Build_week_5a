@@ -6,6 +6,8 @@ import fetchWithAuth from "../services/fetchWithAuth";
 function UpdateProfile({ authorLogin, onProfileUpdate }) {
   // Stampa il profilo attuale nella console
   console.log("Il mio profilo: ", authorLogin);
+
+  const API = import.meta.env.API_VITE ||"http://localhost:5000";
   if (!authorLogin) {
     return null;
   }
@@ -13,7 +15,7 @@ function UpdateProfile({ authorLogin, onProfileUpdate }) {
   // Recupera il token di autorizzazione dalle variabili d'ambiente
   // const Token = process.env.TOKEN;
   // URL dell'API per aggiornare il profilo
-  const url = `http://localhost:5000/profile/${authorLogin._id}`;
+  const url = `${API}/profile/${authorLogin._id}`;
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
   const [formDataProfile, setFormDataProfile] = useState({

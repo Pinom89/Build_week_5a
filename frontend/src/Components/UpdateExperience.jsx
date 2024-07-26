@@ -7,13 +7,8 @@ import { Form, Modal } from "react-bootstrap";
 import fetchWithAuth from "../services/fetchWithAuth";
 
 function UpdateExperience({ authorLogin, experience, fetchExperiences }) {
-  // Stampa l'esperienza attuale nella console
- // console.log('La mia esperienza: ', experience);
-
-  // Recupera il token di autorizzazione dalle variabili d'ambiente
-  //const Token = process.env.TOKEN;
-  // URL dell'API per aggiornare l'esperienza
-  const url = `http://localhost:5000/profile/${authorLogin._id}/experiences/${experience._id}`;
+ const API = import.meta.env.API_VITE ||"http://localhost:5000";
+ const url = `${API}/profile/${authorLogin._id}/experiences/${experience._id}`;
 
   // Definizione degli stati locali
   const [show, setShow] = useState(false); // Stato per controllare la visualizzazione del modal
