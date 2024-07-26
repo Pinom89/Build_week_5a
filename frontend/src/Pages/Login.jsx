@@ -45,7 +45,7 @@ export default function Login() {
 
       const data = await response.json();
 
-      const userResponse = await fetch(`${API_URL}auth/me`, {
+      const userResponse = await fetch(`${API}auth/me`, {
         headers: {
           'Authorization': `Bearer ${data.token}`
         }
